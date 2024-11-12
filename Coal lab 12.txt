@@ -1,0 +1,297 @@
+Lab #13:
+
+Task #01:
+
+.model small
+.stack 100h
+.data
+
+m1 db 'Hello! I am Saira$'
+m2 db 'I am studying Computer Science at Riphah University$'
+m3 db 'My hobbies are cooking, watching dramas and socialising$'
+
+.code
+main proc
+    
+    mov ax,@data
+    mov ds,ax
+    mov dl,m1
+    mov dx,offset m1
+    mov ah,9
+    int 21h
+    
+    call space 
+    
+    mov ax,@data
+    mov ds,ax
+    mov dl,m2
+    mov dx,offset m2
+    mov ah,9
+    int 21h   
+    
+    call space 
+    
+    mov ax,@data
+    mov ds,ax
+    mov dl,m3
+    mov dx,offset m3
+    mov ah,9
+    int 21h   
+    
+    
+    
+    mov ah,4ch
+    int 21h
+    main endp
+
+
+space proc
+    mov dl,10
+    mov ah,2
+    int 21h
+    mov dl,13
+    mov ah,2
+    int 21h
+    ret
+    space endp
+end main
+
+Task#02:
+
+
+.model small
+.stack 100h
+.data  
+m1 db 'Addition: $'
+m2 db 'Subtraction: $'  
+m3 db 'Multiplication: $'
+m4 db 'Division: $'
+.code
+
+main proc
+    mov ax, @data         
+    mov ds, ax
+    mov dx, offset m1
+    mov ah, 9
+    int 21h
+
+    call addition 
+    
+    call space
+
+    mov dx, offset m2
+    mov ah, 9
+    int 21h
+
+    call subtraction  
+    call space  
+    
+    mov dx,offset m3
+    mov ah,9
+    int 21h
+    
+    
+    call multiplication
+    call space 
+    
+    mov dx,offset m4
+    mov ah,9
+    int 21h
+    
+   
+                
+   
+   
+    
+    
+
+    
+    mov ah, 4ch
+    int 21h
+main endp
+
+addition proc
+   
+    mov ah, 1
+    int 21h
+             
+    mov bl, al            
+    sub bl, 48   
+  
+    mov ah, 1
+    int 21h
+    mov cl, al            
+    sub cl, 48
+    
+      
+    add bl, cl
+    add bl, 48           
+    mov dl, bl
+    mov ah, 2
+    int 21h              
+
+    ret
+addition endp  
+
+subtraction proc
+    
+    mov ah, 1
+    int 21h          
+    mov bl, al
+    sub bl,48            
+
+   
+    mov ah, 1
+    int 21h            
+    mov cl, al 
+    sub cl,48           
+
+   
+    sub bl, cl
+    add bl, 48            
+    mov dl, bl
+    mov ah, 2
+    int 21h               
+
+    ret
+subtraction endp 
+
+space proc
+    mov dl,10
+    mov ah,2
+    int 21h
+    mov dl,13
+    mov ah,2
+    int 21h
+    ret
+    space endp   
+
+multiplication proc  
+    mov ah,1
+    int 21h
+    mov bl,al
+    sub bl,48
+    
+    mov ah,1
+    int 21h
+    mov cl,al
+    sub cl,48 
+    
+    mov al,bl
+    mul cl 
+    aam
+    mov ch,ah
+    mov cl,al
+    
+    mov dl,ch
+    add dl,48
+    mov ah,2
+    int 21h
+    
+    mov dl,cl
+    add dl,48
+    mov ah,2
+    int 21h
+    ret
+    multiplication endp   
+
+
+end main
+
+Task#03:
+.model small
+.stack 100h
+.data
+m1 db 'x+y-z-1$'
+.code
+
+main proc
+    
+    call print
+    call space
+    call calculation
+    
+    mov ah,4ch
+    int 21h
+    main endp
+
+calculation proc
+    
+    mov ah,1 
+    int 21h
+    mov bl,al 
+    
+    mov dl,'+'
+    mov ah,2
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov cl,al 
+    
+    mov dl,'-'
+    mov ah,2
+    int 21h
+    
+    
+    add bl,cl
+    sub bl,48
+    mov cx,bx
+    
+    mov ah,1
+    int 21h
+    mov bl,al  
+    
+    mov dl,'-'
+    mov ah,2
+    int 21h
+    
+    sub cx,bx
+    add cx,48
+    mov bx,cx 
+    
+    
+    
+    mov dl,'1'
+    mov ah,2
+    int 21h
+    
+    mov dl,'='
+    mov ah,2
+    int 21h
+    
+    sub bx,49
+    add bx,48 
+    mov dx,bx
+    mov ah,2
+    int 21h
+    ret
+    calculation endp  
+
+space proc
+    mov dl,10
+    mov ah,2
+    int 21h
+    mov dl,13
+    mov ah,2
+    int 21h
+    ret
+    space endp
+
+print proc
+    mov ax,@data
+    mov ds,ax
+    mov dl,m1
+    mov dx,offset m1
+    mov ah,9
+    int 21h
+    ret
+    print endp
+
+
+
+
+
+
+
+end main
